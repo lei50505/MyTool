@@ -70,7 +70,9 @@ namespace MyTool
             }
             else
             {
-                listBoxLog.Items.Add(item);
+                listBoxLog.Items.Add(listBoxLog.Items.Count +"："+ item);
+                listBoxLog.SelectedIndex = listBoxLog.Items.Count - 1;
+                listBoxLog.ScrollIntoView(listBoxLog.SelectedItem);
             }
         }
         private Thread threadStart = null;
@@ -79,7 +81,7 @@ namespace MyTool
             threadStartAbortFlag = false;
             buttonStartIsEnabled(false);
             buttonAbortIsEnabled(true);
-            for(int i = 0;i < 50;i++){
+            for(int i = 0;i < 5;i++){
                 if (threadStartAbortFlag == true)
                 {
                     buttonStartIsEnabled(true);
