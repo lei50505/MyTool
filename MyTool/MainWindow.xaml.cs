@@ -76,9 +76,16 @@ namespace MyTool
         private Thread threadStart = null;
         private void threadStartImpl()
         {
+            threadStartAbortFlag = false;
             buttonStartIsEnabled(false);
             buttonAbortIsEnabled(true);
             for(int i = 0;i < 50;i++){
+                if (threadStartAbortFlag == true)
+                {
+                    buttonStartIsEnabled(true);
+                    buttonAbortIsEnabled(false);
+                    return;
+                }
                 listBoxLogItemsAdd(i.ToString());
                 Thread.Sleep(1000);
             }
@@ -91,12 +98,15 @@ namespace MyTool
             threadStart.IsBackground = true;
             threadStart.Start();
         }
+        private bool threadStartAbortFlag = false;
         private void threadStartAbort()
         {
-            threadStart.Abort();
-            threadStart.Join();
+           // threadStart.Abort();
+            threadStartAbortFlag = true;
+           // threadStart.Join();
+
             buttonAbortIsEnabled(false);
-            buttonStartIsEnabled(true);
+           // buttonStartIsEnabled(true);
         }
         public MainWindow()
         {
